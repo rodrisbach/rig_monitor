@@ -1,0 +1,2 @@
+rig:
+        url: "http://192.168.0.106:22333/api/v1/status" 
