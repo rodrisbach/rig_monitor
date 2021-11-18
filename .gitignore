@@ -2,3 +2,4 @@ rig-monitor
 rig-monitor/*
 __pycache__
 env.sh
+src/config.json
