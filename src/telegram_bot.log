@@ -1,0 +1,13 @@
+19-Nov-21 00:30:07 - Scheduler started
+19-Nov-21 00:30:07 - Added job "verify_status" to job store "default"
+19-Nov-21 00:30:07 - Scheduler started
+19-Nov-21 00:30:17 - Running job "verify_status (trigger: interval[0:00:10], next run at: 2021-11-19 00:30:17 -03)" (scheduled at 2021-11-19 00:30:17.526606-03:00)
+19-Nov-21 00:30:27 - Running job "verify_status (trigger: interval[0:00:10], next run at: 2021-11-19 00:30:27 -03)" (scheduled at 2021-11-19 00:30:27.526606-03:00)
+19-Nov-21 00:30:37 - Execution of job "verify_status (trigger: interval[0:00:10], next run at: 2021-11-19 00:30:37 -03)" skipped: maximum number of running instances reached (1)
+19-Nov-21 00:30:47 - Running job "verify_status (trigger: interval[0:00:10], next run at: 2021-11-19 00:30:47 -03)" (scheduled at 2021-11-19 00:30:47.526606-03:00)
+19-Nov-21 00:30:57 - Running job "verify_status (trigger: interval[0:00:10], next run at: 2021-11-19 00:30:57 -03)" (scheduled at 2021-11-19 00:30:57.526606-03:00)
+19-Nov-21 00:31:07 - Running job "verify_status (trigger: interval[0:00:10], next run at: 2021-11-19 00:31:07 -03)" (scheduled at 2021-11-19 00:31:07.526606-03:00)
+19-Nov-21 00:31:17 - Running job "verify_status (trigger: interval[0:00:10], next run at: 2021-11-19 00:31:17 -03)" (scheduled at 2021-11-19 00:31:17.526606-03:00)
+19-Nov-21 00:31:27 - Running job "verify_status (trigger: interval[0:00:10], next run at: 2021-11-19 00:31:27 -03)" (scheduled at 2021-11-19 00:31:27.526606-03:00)
+19-Nov-21 00:31:37 - Running job "verify_status (trigger: interval[0:00:10], next run at: 2021-11-19 00:31:37 -03)" (scheduled at 2021-11-19 00:31:37.526606-03:00)
+19-Nov-21 00:31:47 - Running job "verify_status (trigger: interval[0:00:10], next run at: 2021-11-19 00:31:47 -03)" (scheduled at 2021-11-19 00:31:47.526606-03:00)

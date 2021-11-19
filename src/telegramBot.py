@@ -2,22 +2,23 @@ import json
 from apscheduler.schedulers.background import BackgroundScheduler
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, CallbackContext
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from aux_functions import verify_status
+from aux_functions import verify_status, get_status
 import logging
 
 def main():
 
     with open("config.json") as jsonfile:
         config = json.load(jsonfile)
-    logging.basicConfig()
-    logging.getLogger('apscheduler').setLevel(logging.DEBUG)
+    logging.basicConfig(level=logging.INFO,filename='telegram_bot.log', filemode='w',format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    logging.getLogger('apscheduler').setLevel(logging.INFO)
     token = config["telegram_token"]
     updater = Updater(token=token, use_context=True)
     scheduler = BackgroundScheduler()
     scheduler.start()
-    scheduler.add_job(verify_status,'interval', seconds=20, args=(updater,config["rig_url"],float(config["min_hashrate"]),float(config["raw_hashrate"])))
+    scheduler.add_job(verify_status,'interval', seconds=10, args=(config["rig_url"],float(config["min_hashrate"]),float(config["raw_hashrate"]),updater))
     updater.dispatcher.add_handler(CommandHandler('start',start))
-#    updater.dispatcher.add_handler(CallbackQueryHandler(button))
+    updater.dispatcher.add_handler(CommandHandler('status',status))
+    updater.dispatcher.add_handler(CallbackQueryHandler(button))
     # Start the bot
     updater.start_polling()
     # Run until the user stop the bot
@@ -25,16 +26,26 @@ def main():
 
 
 def start(update, context):
-    update.message.reply_text('Hi Rodri, I\'m here to help you')
+    keyboard = [
+        [
+            InlineKeyboardButton("status", callback_data="status"),
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text('Please choose:', reply_markup=reply_markup)
 
-#def button(update, context):
-#    query = update.callback_query
-#    query.answer()
-#    if query.data == str("BTC"):
-#        price = get_price('bitcoin')
-#    if query.data == str("ETH"):
-#        price = get_price('ethereum')
-#    query.edit_message_text(text=f"The current price of {query.data} is {price}U$D")
+def status(update, context):
+    with open("config.json") as jsonfile:
+        config = json.load(jsonfile)
+    get_status(config["rig_url"],update)
+
+def button(update, context):
+    with open("config.json") as jsonfile:
+        config = json.load(jsonfile)
+    query = update.callback_query
+    query.answer()
+    if query.data == str("status"):
+        get_status(config["rig_url"], update)
 
 if __name__ == "__main__":
     main()
