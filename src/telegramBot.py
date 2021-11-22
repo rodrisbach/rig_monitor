@@ -1,4 +1,4 @@
-import json, logging
+import json, logging, sys
 from rig import Rig
 from apscheduler.schedulers.background import BackgroundScheduler
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, CallbackContext
@@ -21,15 +21,14 @@ def main():
     logging.basicConfig(level=logging.INFO,filename=config["log_path"], filemode='w',format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
     logging.getLogger('apscheduler').setLevel(logging.INFO)
     token = config["telegram_token"]
-
     updater = Updater(token=token, use_context=True)
     scheduler = BackgroundScheduler()
     scheduler.start()
     rig = Rig(config["rig_url"],config["rig_password"],config["min_hashrate"],config["wallet_address"],config["coin"],config["flexpool_api"])
     rig.get_status()
-    #scheduler.add_job(verify_status,'interval', seconds=10, args=(config["rig_url"],float(config["min_hashrate"]),float(config["raw_hashrate"]),updater))
+    scheduler.add_job(rig.verify_status,'interval', seconds=10, args=(updater))
     updater.dispatcher.add_handler(CommandHandler('start',start))
-    updater.dispatcher.add_handler(CommandHandler('status',status))
+    updater.dispatcher.add_handler(CommandHandler('status', rig.verify_status(updater)))
     updater.dispatcher.add_handler(CallbackQueryHandler(button))
     # Start the bot
     updater.start_polling()
@@ -41,6 +40,9 @@ def start(update, context):
     keyboard = [
         [
             InlineKeyboardButton("status", callback_data="status"),
+            InlineKeyboardButton("status", callback_data="restart"),
+            InlineKeyboardButton("status", callback_data="shutdown"),
+            InlineKeyboardButton("status", callback_data="config"),
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)

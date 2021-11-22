@@ -9,6 +9,9 @@ class Rig:
         self.adress = address
         self.coin = coin
         self.flexpool_api = flexpool_api
+    
+    def send_message(self, message, update):
+        update.message.reply_text(message)
 
     def get_uptime(self, seconds):
         days = seconds // (24 * 3600)
@@ -24,7 +27,7 @@ class Rig:
             uptime = f"{days} days {hours} hours {minutes} minutes"
         return uptime
 
-    def get_status(self):
+    def get_status(self, update):
         try:
             login = requests.get(f"{self.url}/login?password={self.password}").json()
             sid = login["sid"]
@@ -40,9 +43,9 @@ class Rig:
             temperature = gpu["temperature"]
             device = gpu["name"]
             message = f"{message}\n{device}\nHashrate: {hashrate}MH/s\nTemperature: {temperature}\n"
-        return message
+        self.send_message(message, update)
 
-    def verify_status(self):
+    def verify_status(self, update):
         try:
             login = requests.get(f"{self.url}/login?password={self.password}").json()
             sid = login["sid"]
@@ -60,7 +63,9 @@ class Rig:
                 message = "WARNING: {message}"
             else:
                 message = ""
-        return message
+            if bool(message) == True:
+                self.send_message(message, update)
+
 
     def get_flexpool_balance(self):
         header = {'accept: application/json'}
