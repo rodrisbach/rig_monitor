@@ -55,7 +55,6 @@ class Rig:
                 message = ""
         return message
 
-
     def get_flexpool_balance(self):
         header = {'accept: application/json'}
         url = f"{self.flexpool_api}/miner/balance?coin={self.coin}&address={self.adress}"

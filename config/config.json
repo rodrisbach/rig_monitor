@@ -4,5 +4,6 @@
     "min_hashrate": "30",
     "wallet_address": "",
     "coin": "",
-    "flexpool_api": ""
+    "flexpool_api": "",
+    "log_path": ""
 }

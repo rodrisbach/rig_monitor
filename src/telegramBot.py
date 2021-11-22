@@ -7,7 +7,7 @@ import logging
 
 def main():
 
-    with open("config.json") as jsonfile:
+    with open("../config/config.json") as jsonfile:
         config = json.load(jsonfile)
     logging.basicConfig(level=logging.INFO,filename=config["log_path"], filemode='w',format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
     logging.getLogger('apscheduler').setLevel(logging.INFO)
@@ -15,7 +15,7 @@ def main():
     updater = Updater(token=token, use_context=True)
     scheduler = BackgroundScheduler()
     scheduler.start()
-    
+
     #scheduler.add_job(verify_status,'interval', seconds=10, args=(config["rig_url"],float(config["min_hashrate"]),float(config["raw_hashrate"]),updater))
     updater.dispatcher.add_handler(CommandHandler('start',start))
     updater.dispatcher.add_handler(CommandHandler('status',status))
