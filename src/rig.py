@@ -1,7 +1,7 @@
 import requests, json
 
 class Rig:
-    RAW_HASHRATE = 100000
+    RAW_HASHRATE = 1000000
     def __init__(self, url, password, min_hashrate, address, coin, flexpool_api):
         self.url = url
         self.password = password
@@ -31,13 +31,15 @@ class Rig:
             status = requests.get(f"{self.url}/summary?sid={sid}", timeout=10).json()
         except requests.exceptions.RequestException as error:
             message = f"Error: {error}"
+            return message
         uptime = self.get_uptime(status["uptime"])
-        message = f'Pool Hashrate {status["hashrate"]} \nUptime: {uptime} \nRestarts: {status["watchdog_stat"]["total_restarts"]}'
+        rig_hashrate = round(float(status["hashrate"]/self.RAW_HASHRATE), 2)
+        message = f'Pool Hashrate {rig_hashrate}MH/s \nUptime: {uptime} \nRestarts: {status["watchdog_stat"]["total_restarts"]}\n'
         for gpu in status["gpus"]:
-            hashrate = int(gpu["hashrate"])/self.RAW_HASHRATE
+            hashrate = round(float(gpu["hashrate"])/self.RAW_HASHRATE, 2)
             temperature = gpu["temperature"]
             device = gpu["name"]
-            message = f"{message}\n {device}\nHashrate: {hashrate}\nTemperature: {temperature}\n"
+            message = f"{message}\n{device}\nHashrate: {hashrate}MH/s\nTemperature: {temperature}\n"
         return message
 
     def verify_status(self):
@@ -51,7 +53,7 @@ class Rig:
             hashrate = int(gpu["hashrate"])/self.RAW_HASHRATE
             temperature = gpu["temperature"]
             device = gpu["name"]
-            message = f"\n{device['info']}\nHashrate: {device['hashrate']}\nTemperature: {temperature}"
+            message = f"\n{device['info']}\nHashrate: {device['hashrate']}MH/s\nTemperature: {temperature}"
             if hashrate < self.min_hashrate/2 or temperature > 70:
                 message = "CRITICAL: {message}"
             elif hashrate < self.min_hashrate or temperature >= 65:

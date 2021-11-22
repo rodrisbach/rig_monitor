@@ -1,4 +1,5 @@
 rig-monitor
 rig-monitor/*
 __pycache__
-src/config.json
+src/test.py
+config/test.json
