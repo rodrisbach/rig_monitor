@@ -1,13 +1,21 @@
-# BTC TELEGRAM BOT
-I want an easy way to get Bitcoin value in my phone. There are a lot of apps with this feature out there, but I need to practice my programming skills.
+# RIG MONITOR
 
-## About this project
+I builded my first GPU Mining Rig to mine Ethereum, and I found some troubles in the way. My rig was in my home network, and I wanted to monitor it, but I was away from home. So, I made this Telegram bot to get new asbout my rig and query health, hashrate, temperature,etc , and take action in case of some failure, restarting the miner software, o modifing some settings and parameters.
 
-### Installing
-* Run your Python scripts and apps in a virtual environment is a good practice. To install and use virtualenv, see the following [document](virtualenv.md)
-```
-pip install -r requirements.txt
-```
-### Run
+## Table of content
+1. [Requirements](#Requirements)
+2. [Installing](#Instaling)
+3. [Instaling via Docker](#Intaling2)
+4. [Config][#Config]
+5. [Usage](#Usage)
 
+## Requirements
+
+## Installing
+
+## Installing via Docker
+
+## Config
+
+## Usage
 
