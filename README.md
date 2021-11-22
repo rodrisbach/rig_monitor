@@ -6,7 +6,7 @@ I builded my first GPU Mining Rig to mine Ethereum, and I found some troubles in
 1. [Requirements](#Requirements)
 2. [Installing](#Instaling)
 3. [Instaling via Docker](#Intaling2)
-4. [Config][#Config]
+4. [Config](#Config)
 5. [Usage](#Usage)
 
 ## Requirements
