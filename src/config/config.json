@@ -1,0 +1,8 @@
+{
+    "telegram_token": "",
+    "rig_url": "",
+    "min_hashrate": "30",
+    "wallet_address": "",
+    "coin": "",
+    "flexpool_api": ""
+}
