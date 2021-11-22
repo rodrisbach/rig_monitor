@@ -1,6 +1,7 @@
 {
     "telegram_token": "",
     "rig_url": "",
+    "rig_password": "",
     "min_hashrate": "30",
     "wallet_address": "",
     "coin": "",

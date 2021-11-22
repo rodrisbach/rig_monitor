@@ -1,9 +1,8 @@
-import json
+import json, logging
+from rig import Rig
 from apscheduler.schedulers.background import BackgroundScheduler
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, CallbackContext
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from aux_functions import verify_status, get_status
-import logging
 
 def main():
 
@@ -12,10 +11,12 @@ def main():
     logging.basicConfig(level=logging.INFO,filename=config["log_path"], filemode='w',format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
     logging.getLogger('apscheduler').setLevel(logging.INFO)
     token = config["telegram_token"]
+
     updater = Updater(token=token, use_context=True)
     scheduler = BackgroundScheduler()
     scheduler.start()
-
+    rig = Rig(config["rig_url"],,config["rig_password"],config["min_hashrate"],config["wallet_address"],config["coin"],config["flexpool_api"])
+    rig.get_status()
     #scheduler.add_job(verify_status,'interval', seconds=10, args=(config["rig_url"],float(config["min_hashrate"]),float(config["raw_hashrate"]),updater))
     updater.dispatcher.add_handler(CommandHandler('start',start))
     updater.dispatcher.add_handler(CommandHandler('status',status))

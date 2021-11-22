@@ -2,8 +2,9 @@ import requests, json
 
 class Rig:
     RAW_HASHRATE = 100000
-    def __init__(self, url, min_hashrate, address, coin, flexpool_api):
+    def __init__(self, url, password, min_hashrate, address, coin, flexpool_api):
         self.url = url
+        self.password = password
         self.min_hashrate = min_hashrate
         self.adress = address
         self.coin = coin
@@ -25,7 +26,9 @@ class Rig:
 
     def get_status(self):
         try:
-            status = requests.get(self.url, timeout=10).json()
+            login = requests.get(f"{self.url}/login?password={self.password}").json()
+            sid = login["sid"]
+            status = requests.get(f"{self.url}/summary?sid={sid}", timeout=10).json()
         except requests.exceptions.RequestException as error:
             message = f"Error: {error}"
         uptime = self.get_uptime(status["uptime"])
@@ -39,7 +42,9 @@ class Rig:
 
     def verify_status(self):
         try:
-            status = requests.get(self.url, timeout=10).json()
+            login = requests.get(f"{self.url}/login?password={self.password}").json()
+            sid = login["sid"]
+            status = requests.get(f"{self.url}/summary?sid={sid}", timeout=10).json()
         except requests.exceptions.RequestException as error:
             message = f"Error: {error}"
         for gpu in status["gpus"]:
