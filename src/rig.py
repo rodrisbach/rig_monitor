@@ -2,17 +2,14 @@ import requests, json
 
 class Rig:
     RAW_HASHRATE = 1000000
-    def __init__(self, url, password, min_hashrate, address, coin, flexpool_api):
+    def __init__(self, url, password, min_hashrate, address, coin, flexpool_api, update):
         self.url = url
         self.password = password
-        self.min_hashrate = min_hashrate
+        self.min_hashrate = int(min_hashrate)
         self.adress = address
         self.coin = coin
         self.flexpool_api = flexpool_api
     
-    def send_message(self, message, update):
-        update.message.reply_text(message)
-
     def get_uptime(self, seconds):
         days = seconds // (24 * 3600)
         seconds = seconds % (24 * 3600)
@@ -27,7 +24,7 @@ class Rig:
             uptime = f"{days} days {hours} hours {minutes} minutes"
         return uptime
 
-    def get_status(self, update):
+    def get_status(self):
         try:
             login = requests.get(f"{self.url}/login?password={self.password}").json()
             sid = login["sid"]
@@ -42,10 +39,10 @@ class Rig:
             hashrate = round(float(gpu["hashrate"])/self.RAW_HASHRATE, 2)
             temperature = gpu["temperature"]
             device = gpu["name"]
-            message = f"{message}\n{device}\nHashrate: {hashrate}MH/s\nTemperature: {temperature}\n"
-        self.send_message(message, update)
+            message = f"{message}\n{device}\nHashrate: {hashrate}MH/s\nTemperature: {temperature}°C\n"
+        return message
 
-    def verify_status(self, update):
+    def verify_status(self):
         try:
             login = requests.get(f"{self.url}/login?password={self.password}").json()
             sid = login["sid"]
@@ -53,19 +50,17 @@ class Rig:
         except requests.exceptions.RequestException as error:
             message = f"Error: {error}"
         for gpu in status["gpus"]:
-            hashrate = int(gpu["hashrate"])/self.RAW_HASHRATE
-            temperature = gpu["temperature"]
+            hashrate = round(float(gpu["hashrate"])/self.RAW_HASHRATE, 2)
+            temperature = int(gpu["temperature"])
             device = gpu["name"]
-            message = f"\n{device['info']}\nHashrate: {device['hashrate']}MH/s\nTemperature: {temperature}"
-            if hashrate < self.min_hashrate/2 or temperature > 70:
+            #message = f"\n{device['info']}\nHashrate: {device['hashrate']}MH/s\nTemperature: {temperature}°C\n"
+            if hashrate < (self.min_hashrate/2) or int(temperature) > 70:
                 message = "CRITICAL: {message}"
             elif hashrate < self.min_hashrate or temperature >= 65:
                 message = "WARNING: {message}"
             else:
                 message = ""
-            if bool(message) == True:
-                self.send_message(message, update)
-
+            return message
 
     def get_flexpool_balance(self):
         header = {'accept: application/json'}
