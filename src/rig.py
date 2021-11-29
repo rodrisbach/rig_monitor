@@ -2,7 +2,7 @@ import requests, json
 
 class Rig:
     RAW_HASHRATE = 1000000
-    def __init__(self, url, password, min_hashrate, address, coin, flexpool_api, update):
+    def __init__(self, url, password, min_hashrate, address, coin, flexpool_api):
         self.url = url
         self.password = password
         self.min_hashrate = int(min_hashrate)

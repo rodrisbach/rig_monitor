@@ -1,5 +1,4 @@
 import json, logging, sys
-from functools import partial
 from rig import Rig
 from apscheduler.schedulers.background import BackgroundScheduler
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, CallbackContext
