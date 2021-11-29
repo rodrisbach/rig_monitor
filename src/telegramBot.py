@@ -1,4 +1,5 @@
 import json, logging, sys
+from functools import partial
 from rig import Rig
 from apscheduler.schedulers.background import BackgroundScheduler
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, CallbackContext
@@ -24,10 +25,11 @@ def main():
     updater = Updater(token=token, use_context=True)
     scheduler = BackgroundScheduler()
     scheduler.start()
-    rig = Rig(config["rig_url"],config["rig_password"],config["min_hashrate"],config["wallet_address"],config["coin"],config["flexpool_api"], updater)
+    rig = Rig(config["rig_url"],config["rig_password"],config["min_hashrate"],config["wallet_address"],config["coin"],config["flexpool_api"])
 #    scheduler.add_job(rig.verify_status,'interval', seconds=10, args=(updater))
     updater.dispatcher.add_handler(CommandHandler('start',start))
-    updater.dispatcher.add_handler(CommandHandler('status', rig.verify_status))
+#    updater.dispatcher.add_handler(CommandHandler('status', status))
+    updater.dispatcher.add_handler(CommandHandler('status', lambda rig:status(rig)))
     updater.dispatcher.add_handler(CallbackQueryHandler(button))
     # Start the bot
     updater.start_polling()
@@ -35,7 +37,7 @@ def main():
     updater.idle()
 
 
-def start(update, context):
+def start(update: Update, context: CallbackContext):
     keyboard = [
         [
             InlineKeyboardButton("status", callback_data="status"),
@@ -47,12 +49,11 @@ def start(update, context):
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text('Please choose:', reply_markup=reply_markup)
 
-def status(update, context):
-    with open("config.json") as jsonfile:
-        config = json.load(jsonfile)
-    get_status(config["rig_url"],update)
+def status(update: Update, context: CallbackContext, rig):
+    message = rig.get_status()
+    update.message.reply_text(f'{message}')
 
-def button(update, context):
+def button(update: Update, context: CallbackContext):
     with open("config.json") as jsonfile:
         config = json.load(jsonfile)
     query = update.callback_query
