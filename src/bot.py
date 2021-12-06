@@ -33,7 +33,7 @@ def prepare_data_for_answer(data):
 @post('/')
 def main():
     try:
-        jsonfile = open("../config/config.json")
+        jsonfile = open("../config/test.json")
     except OSError:
         print("OS error occurred trying to open config file")
         sys.exit(1)

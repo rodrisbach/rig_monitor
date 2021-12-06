@@ -14,8 +14,27 @@ At the moment I wrote this project, I was using T-Rex miner and Flexpool, and th
 
 ## Installing
 
-### Using command line
+### Install ngrok
+```bash
+sudo snap install ngrok 
+#(Check oficial website for more information: https://ngrok.com/)
 ```
+
+### Run ngrox
+
+```bash
+ngrok http 8080
+#If port 8080 is already used, you can change it in config/config.json.
+```
+### Set up Webhook
+
+In your browser or using curl command, execute the following action:
+```bash
+api.telegram.org/bot<your_token>/setWebHook?url=https://<your_ngrok_url.ngrok.io>/
+```
+
+### Using command line
+```bash
 # Create a virtual environment. I've used virtualenv
 
 virtualenv develop
@@ -27,9 +46,6 @@ pip install -r requirements.txt
 # NOTE: If you have trouble with bottle, please try:
 pip install -U bootle
 
-#Install ngrok
-
-sudo snap install ngrok (Check oficial website for more information: https://ngrok.com/)
 ```
 
 ###  Docker
