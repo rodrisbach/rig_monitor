@@ -1,8 +1,10 @@
-from bottle import run, post
+from bottle import run, post, request as bottle_request  
 
-
-@post('/')  
+@post('/')
 def main():  
+    data = bottle_request.json  
+    print(data)
+
     return 
 
 
