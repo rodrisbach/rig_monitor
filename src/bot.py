@@ -1,12 +1,57 @@
-from bottle import run, post, request as bottle_request  
+import requests, json
+from bottle import (  
+    run, post, response, request as bottle_request
+)
+
+def get_chat_id(data):
+
+    chat_id = data['message']['chat']['id']
+    return chat_id
+
+def get_message(data):
+
+    message_text = data['message']['text']
+    return message_text
+
+def send_message(prepared_data, bot_url):
+ 
+    message_url = bot_url + 'sendMessage'
+    requests.post(message_url, json=prepared_data)  # don't forget to make import requests lib
+
+
+
+def prepare_data_for_answer(data):
+
+    answer = "I'll process your request"
+    json_data = {
+        "chat_id": get_chat_id(data),
+        "text": answer,
+    }
+
+    return json_data
 
 @post('/')
-def main():  
-    data = bottle_request.json  
-    print(data)
+def main():
+    try:
+        jsonfile = open("../config/config.json")
+    except OSError:
+        print("OS error occurred trying to open config file")
+        sys.exit(1)
+    except FileNotFoundError:
+        print("Config file not found. Aborting")
+        sys.exit(1)
+    else:
+        with jsonfile:
+            config = json.load(jsonfile)
+    token = config["telegram_token"]
+    bot_url = f'https://api.telegram.org/bot{token}/'
 
-    return 
+    data = bottle_request.json
 
+    answer_data = prepare_data_for_answer(data)
+    send_message(answer_data, bot_url)  
 
-if __name__ == '__main__':  
+    return response  
+
+if __name__ == '__main__':
     run(host='localhost', port=8080, debug=True)
