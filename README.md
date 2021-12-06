@@ -15,6 +15,26 @@ At the moment I wrote this project, I was using T-Rex miner and Flexpool, and th
 
 ## Installing
 
+### Using command line
+```
+# Create a virtual environment. I've used virtualenv
+virtualenv develop
+
+source develop/bin/activate
+
+# Install required libaries
+
+pip install -r requirements.txt
+
+# NOTE: If you have trouble with bottle, please try:
+pip install -U bootle
+
+#Install ngrok
+
+sudo snap install ngrok
+# Check oficial website for more information: https://ngrok.com/
+```
+
 ## Installing via Docker
 
 ## Config
