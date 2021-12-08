@@ -15,7 +15,7 @@ def send_message(prepared_data, bot_url):
     requests.post(message_url, json=prepared_data)  # don't forget to make import requests lib
 
 def validate_user(data, expected_username):
-    if data["message"]["username"] == expected_username:
+    if data["message"]["from"]["username"] == expected_username:
         return True
     return False
 
