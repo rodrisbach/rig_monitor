@@ -9,16 +9,15 @@ def get_chat_id(data):
     chat_id = data['message']['chat']['id']
     return chat_id
 
-def get_message(data):
-
-    message_text = data['message']['text']
-    return message_text
-
 def send_message(prepared_data, bot_url):
  
     message_url = bot_url + 'sendMessage'
     requests.post(message_url, json=prepared_data)  # don't forget to make import requests lib
 
+def validate_user(data, expected_username):
+    if data["message"]["username"] == expected_username:
+        return True
+    return False
 
 def prepare_response(data, rig):
 
@@ -51,9 +50,11 @@ def main():
     rig = Rig(config["rig_url"],config["rig_password"],config["min_hashrate"],config["wallet_address"],config["coin"],config["flexpool_api"])
     data = bottle_request.json
     print(data)
-    response = prepare_response(data, rig)
-    send_message(response, bot_url)  
-
+    if validate_user(data,config["telegram_username"]):
+        response = prepare_response(data, rig)
+        send_message(response, bot_url)
+    else:
+        response = "Invalid user. You are not allowed to use this bot"
     return response  
 
 if __name__ == '__main__':
