@@ -1,4 +1,5 @@
 import requests, json, sys
+from rig import Rig
 from bottle import (  
     run, post, response, request as bottle_request
 )
@@ -19,15 +20,17 @@ def send_message(prepared_data, bot_url):
     requests.post(message_url, json=prepared_data)  # don't forget to make import requests lib
 
 
+def prepare_response(data, rig):
 
-def prepare_data_for_answer(data):
-
-    answer = "I'll process your request"
+    command = data["message"]["text"]
+    if command == "/start":
+        answer = "Hi, see below the available commands: \n/status -> Get Rig and Cards status"
+    if command == "/status":
+        answer = rig.get_status()
     json_data = {
         "chat_id": get_chat_id(data),
         "text": answer,
     }
-
     return json_data
 
 @post('/')
@@ -45,11 +48,11 @@ def main():
             config = json.load(jsonfile)
     token = config["telegram_token"]
     bot_url = f'https://api.telegram.org/bot{token}/'
-
+    rig = Rig(config["rig_url"],config["rig_password"],config["min_hashrate"],config["wallet_address"],config["coin"],config["flexpool_api"])
     data = bottle_request.json
     print(data)
-    answer_data = prepare_data_for_answer(data)
-    send_message(answer_data, bot_url)  
+    response = prepare_response(data, rig)
+    send_message(response, bot_url)  
 
     return response  
 
