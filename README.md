@@ -22,15 +22,16 @@ sudo snap install ngrok
 
 ### Run ngrox
 
+Ngrok will expose the web server running the bot to internet. If you have a paid plan, you can run Ngrok with a subdomain, getting a stable URL. Instead, if you are using a free plan, the public URL will change every time you start a tunnel. If you run "ngrok http 8080", then you stop the process, and run it agan, you could see how the public URL will change.
 ```bash
 ngrok http 8080
 #If port 8080 is already used, you can change it in config/config.json.
 ```
 ### Set up Webhook
 
-In your browser or using curl command, execute the following action:
+Execute the following action:
 ```bash
-api.telegram.org/bot<your_token>/setWebHook?url=https://<your_ngrok_url.ngrok.io>/
+curl https://api.telegram.org/bot<your_token>/setWebHook?url=https://<your_ngrok_url.ngrok.io>/
 ```
 
 ### Using command line

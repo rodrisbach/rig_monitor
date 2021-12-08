@@ -47,7 +47,7 @@ def main():
     bot_url = f'https://api.telegram.org/bot{token}/'
 
     data = bottle_request.json
-
+    print(data)
     answer_data = prepare_data_for_answer(data)
     send_message(answer_data, bot_url)  
 
