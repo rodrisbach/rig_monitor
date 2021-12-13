@@ -1,6 +1,4 @@
 {
-    "telegram_token": "",
-    "telegram_username": "",
     "rig_url": "",
     "rig_password": "",
     "min_hashrate": "30",
