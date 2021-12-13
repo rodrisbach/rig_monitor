@@ -1,5 +1,5 @@
 import json, logging
-from rig import Rig
+from scheduler.src.rig import Rig
 from apscheduler.schedulers.background import BackgroundScheduler
 from bootle import run,post
 
