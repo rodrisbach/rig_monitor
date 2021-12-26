@@ -1,0 +1,33 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: $"MYSQL_DATABASE"
+      MYSQL_USER: $"MYSQL_USER"
+      MYSQL_PASSWORD: $"MYSQL_PASSWORD"
+      MYSQL_ROOT_PASSWORD: $"MYSQL_ROOT_PASSWORD"
+    ports:
+      - "3306:3306"
+    
+  ngrok:
+    image: ngrok/ngrok:alpine
+    restart: always
+    ports:
+      - "4551:4551"
+    links:
+      - api
+    environment:
+    
+  api:
+    build: api/
+    ports:
+      - "8080:8080"
+    restart: always
+
+  scheduler:
+    build: scheduler/
+    restart: always
+
+    

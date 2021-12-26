@@ -5,5 +5,9 @@
     "wallet_address": "",
     "coin": "",
     "flexpool_api": "",
-    "log_path": ""
+    "log_path": "",
+    "db_user": "",
+    "db_passwoord": "",
+    "db_host": "",
+    "db_database": ""
 }
