@@ -6,11 +6,11 @@ else
     CONFIG="$1"
 fi
 
-source "$ENV"
+source "$CONFIG"
 
-cat <<'EOF' >> api/config.json
+cat <<EOF > api/config.json
 {
-    "telegram_token": "'$TELEGRAM_TOKEN'",
-    "telegram_username": "'$TELEGAM_USERNAME'",
+    "telegram_token": "${TELEGRAM_TOKEN}",
+    "telegram_username": "${TELEGRAM_USERNAME}",
 } 
 EOF
