@@ -1,6 +1,6 @@
 #!/bin/env bash
 
-if [[ -n "$1" ]]; then
+if [[ -z "$1" ]]; then
     CONFIG="config.env"
 else
     CONFIG="$1"
