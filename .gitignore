@@ -1,8 +1,7 @@
-rig-monitor
+rig-monitor*
 rig-monitor/*
 __pycache__
-src/test.py
 config.env
 api/config.json
 scheduler/config.json
-
+logs
