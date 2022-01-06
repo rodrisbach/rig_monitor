@@ -27,6 +27,5 @@ cat <<EOF > scheduler/config.json
     "db_user": "${MYSQL_USER}",
     "db_passwoord": "${MYSQL_PASSWORD}",
     "db_host": "${}",
-    "db_database": "${MYSQL_DATABASE}"
 }
 EOF
