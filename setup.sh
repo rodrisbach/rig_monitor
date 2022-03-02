@@ -8,6 +8,8 @@ fi
 
 source "$CONFIG"
 
+DEVICE_METRICS_TABLE=${DEVICE_METRICS_TABLE:-"device_metrics"}
+POOL_METRICS_TABLE${POOL_METRICS_TABLE:-"pool_metrics"}
 cat <<EOF > api/config.json
 {
     "telegram_token": "${TELEGRAM_TOKEN}",
@@ -27,5 +29,8 @@ cat <<EOF > scheduler/config.json
     "db_user": "${MYSQL_USER}",
     "db_passwoord": "${MYSQL_PASSWORD}",
     "db_host": "${}",
+    "db_name": "${MYSQL_DATABASE}"
+    "device_metrics_table": "${DEVICE_METRICS_TABLE}",
+    "pool_metrics_table": "${POOL_METRICS_TABLE}"
 }
 EOF
