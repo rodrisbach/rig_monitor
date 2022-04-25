@@ -18,10 +18,11 @@ with open(f"{path}/api/config.json", "w") as jsonfile:
     json.dump(config["telegram"], jsonfile)
 
 # DATABASE CONFIGURATION
-db_config = f'''MYSQL_DATABASE="{config["database"]["name"]}"
-MYSQL_USER="{config["database"]["user"]}"
-MYSQL_PASSWORD="{config["database"]["password"]}"
-MYSQL_ROOT_PASSWORD="{config["database"]["root_password"]}"'''
+db_config = f"""MYSQL_DATABASE=\"{config["database"]["name"]}\"
+MYSQL_USER=\"{config["database"]["user"]}\"
+MYSQL_PASSWORD=\"{config["database"]["password"]}\"
+MYSQL_ROOT_PASSWORD=\"{config["database"]["root_password"]}\""""
+
 db_config_file=open(f"{path}/db_config.env","w")
 db_config_file.write(db_config)
 db_config_file.close()
