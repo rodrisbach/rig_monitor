@@ -7,4 +7,4 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-CMD [ "python", "src/scheduler.py" ]
+CMD [ "python", "src/monitor.py" ]

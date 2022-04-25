@@ -1,40 +1,29 @@
 from rig import Rig
 from db_operations import Operations
+from utilities import read_config
 from apscheduler.schedulers.background import BlockingScheduler
-import json, logging, sys, mysql.connector
+import logging, mysql.connector
 from mysql.connector import Error
 
 
 def main():
 
-    try:
-        jsonfile = open("config.json")
-    except OSError:
-        print("OS error occurred trying to open config file")
-        sys.exit(1)
-    except FileNotFoundError:
-        print("Config file not found. Aborting")
-        sys.exit(1)
-    else:
-        with jsonfile:
-            config = json.load(jsonfile)
-
+    config = read_config("config.json")
     query_database_creation = Operations.get_database_creation(config["db_name"])
     query_device_table_creation = Operations.get_table_creation(config["device_metrics_table"])
-    query_pool_table_creation = Operations.get_table_creation(config["pool_metrics_table"])
 
     try:
-        connection = mysql.connector.connect(host=config["db_host"],
-                                             username=config["db_user"],
-                                             password=config["db_password"])
+        connection = mysql.connector.connect(host=config["database"]["name"],
+                                             username=config["database"]["user"],
+                                             password=config["database"]["password"])
         if connection.is_connected():
             cursor = connection.cursor()
             cursor.execute(query_database_creation)
             cursor.execute(query_device_table_creation)
-            cursor.execute(query_pool_table_creation)
 
     except Error as error:
-        print("Error while connecting to MySQL", error)
+        logging.critical("Error while connecting to MySQL", error)
+        sys.exit(1)
 
     rig = Rig(config["rig_url"],
               config["rig_password"],
