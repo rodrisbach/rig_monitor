@@ -1,8 +1,6 @@
 # RIG MONITOR
 
-I builded my first GPU Mining Rig to mine Ethereum, and I found some troubles in the way. My rig was in my home network, and I wanted to monitor it, but I was away from home. So, I made this Telegram bot to get new asbout my rig and query health, hashrate, temperature,etc , and take action in case of some failure, restarting the miner software, o modifing some settings and parameters.
-
-At the moment I wrote this project, I was using T-Rex miner and Flexpool, and their respective APIs. More mining software and pools will be added in the future.
+Monitor your Mining Rigs, receive alerts and Telegram messages.
 
 ## Table of content
 1. [Requirements](#Requirements)
@@ -16,7 +14,7 @@ At the moment I wrote this project, I was using T-Rex miner and Flexpool, and th
 
 ### Install ngrok
 ```bash
-sudo snap install ngrok 
+sudo snap install ngrok
 #(Check oficial website for more information: https://ngrok.com/)
 ```
 
@@ -54,4 +52,3 @@ pip install -U bootle
 ## Config
 
 ## Usage
-
