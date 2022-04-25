@@ -1,7 +1,8 @@
 rig-monitor*
 rig-monitor/*
 __pycache__
-config.env
+config.json
+db_config.env
 api/config.json
-scheduler/config.json
+monitor/config.json
 logs

@@ -1,0 +1,26 @@
+{
+  "database": {
+    "name": "",
+    "user": "",
+    "password": "",
+    "root_password": ""
+  },
+  "rig": [
+    {
+      "name": "",
+      "url": "",
+      "password": "",
+      "min_hashrate": ""
+    }
+  ],
+  "wallet_addres": "",
+  "coin": "",
+  "flexpool_api": "",
+  "log": "",
+  "log_level": "",
+  "log_path": "",
+  "telegram": {
+    "token": "",
+    "username": ""
+  }
+}
